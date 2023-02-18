@@ -22,12 +22,16 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-public:
-	UFUNCTION()
-		void SpawnCube();
 
 protected:
+	//actor class to spawn
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<ACube> ToSpawn;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class UBoxComponent* SpawnVolume;
 
+public:
+	UFUNCTION()
+		void SpawnCube();
 };

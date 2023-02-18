@@ -123,6 +123,7 @@ void ACube_CollectingCharacter::SetupPlayerInputComponent(class UInputComponent*
 
 }
 
+
 void ACube_CollectingCharacter::Move(const FInputActionValue& Value)
 {
 	// input is a Vector2D

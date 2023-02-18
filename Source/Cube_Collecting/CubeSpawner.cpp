@@ -32,11 +32,16 @@ void ACubeSpawner::Tick(float DeltaTime)
 
 }
 
-void ACubeSpawner::SpawnCube() 
+void ACubeSpawner::SpawnCube()
 {
+	//gets the location and rotation of the spawner
 	FVector SpawnLocation = GetActorLocation();
 	FRotator SpawnRotation = GetActorRotation();
-
-	GetWorld()->SpawnActor<ACube>(SpawnLocation, SpawnRotation);
+	//gets the world
+	UWorld* world = GetWorld();
+	if (world) {
+		world->SpawnActor<ACube>(SpawnLocation, SpawnRotation);
+	}
 }
+
 
