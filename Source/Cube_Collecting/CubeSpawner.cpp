@@ -41,6 +41,7 @@ void ACubeSpawner::SpawnCube()
 	UWorld* world = GetWorld();
 	if (world) {
 		world->SpawnActor<ACube>(SpawnLocation, SpawnRotation);
+		
 	}
 }
 

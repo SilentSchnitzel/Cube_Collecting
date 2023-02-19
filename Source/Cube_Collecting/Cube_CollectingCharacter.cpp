@@ -80,9 +80,10 @@ void ACube_CollectingCharacter::SpawnActors()
 	if (ActorSpawnerReference)
 	{
 		ActorSpawnerReference->SpawnCube();
+		if (GEngine)
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("SpawnActors called!"));
 	}
-	if (GEngine)
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Some debug message!"));
+	
 }
 
 void ACube_CollectingCharacter::DestroyActors()
@@ -93,9 +94,9 @@ void ACube_CollectingCharacter::DestroyActors()
 	for (AActor* ActorFound : FoundActors)
 	{
 		ActorFound->Destroy();
+		if (GEngine)
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("DestroyActors called!"));
 	}
-	if (GEngine)
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Some debug message!"));
 }
 
 //////////////////////////////////////////////////////////////////////////

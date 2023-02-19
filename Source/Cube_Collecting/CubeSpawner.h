@@ -24,9 +24,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 protected:
-	//actor class to spawn
-	UPROPERTY(EditAnywhere)
-		TSubclassOf<ACube> ToSpawn;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class UBoxComponent* SpawnVolume;
@@ -34,4 +31,5 @@ protected:
 public:
 	UFUNCTION()
 		void SpawnCube();
+
 };
