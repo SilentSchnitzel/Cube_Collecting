@@ -12,6 +12,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Cube.h"
 #include "CubeSpawner.h"
+#include "MySphere.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -88,9 +89,9 @@ void ACube_CollectingCharacter::SpawnActors()
 
 void ACube_CollectingCharacter::DestroyActors()
 {
-	//Get every Actor to Spawn in the world and invoke Destroy Actor
+	//Get every Actor to Spawn in the world and invoke Destroy Actors
 	TArray<AActor*> FoundActors;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ACube::StaticClass(), FoundActors);
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AMySphere::StaticClass(), FoundActors);
 	for (AActor* ActorFound : FoundActors)
 	{
 		ActorFound->Destroy();

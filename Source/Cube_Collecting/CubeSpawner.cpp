@@ -4,6 +4,7 @@
 #include "CubeSpawner.h"
 #include "Components/BoxComponent.h"
 #include "Cube.h"
+#include "MySphere.h"
 
 // Sets default values
 ACubeSpawner::ACubeSpawner()
@@ -40,7 +41,7 @@ void ACubeSpawner::SpawnCube()
 	//gets the world
 	UWorld* world = GetWorld();
 	if (world) {
-		world->SpawnActor<ACube>(SpawnLocation, SpawnRotation);
+		world->SpawnActor<AMySphere>(SpawnLocation, SpawnRotation);
 		
 	}
 }
