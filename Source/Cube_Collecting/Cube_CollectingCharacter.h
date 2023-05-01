@@ -73,7 +73,8 @@ public:
 protected:
 	void SpawnActors();
 	void DestroyActors();
-
 	void Test();
+
+	void SpawnCube();
 };
 

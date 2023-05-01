@@ -113,6 +113,12 @@ void ACube_CollectingCharacter::Test()
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Test got called"));
 }
 
+void ACube_CollectingCharacter::SpawnCube()
+{
+	UWorld* world = GetWorld();
+	AActor* ActorSpawnerTofind = UGameplayStatics::GetActorOfClass(world, ACubeSpawner::StaticClass());
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Input
 

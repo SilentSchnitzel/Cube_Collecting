@@ -10,8 +10,8 @@ UCLASS()
 class CUBE_COLLECTING_API AActor_Spawner : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	AActor_Spawner();
 
@@ -19,11 +19,16 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+protected:
 
-	void Spawn();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		class UBoxComponent* BoxVolume;
+public: 
+	UFUNCTION()
+		void Spawn();
 
 	UPROPERTY(EditDefaultsOnly)
 		TSubclassOf<AActor> ActorToSpawn;
