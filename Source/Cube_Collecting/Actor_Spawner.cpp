@@ -34,10 +34,17 @@ void AActor_Spawner::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 }
-//Game/ThirdPerson/Blueprints/MyCube.uasset
+//C: / Users / wtooy / Desktop / UnrealEngine / Cube_Collecting / Content / ThirdPerson / Blueprints / MyCube.uasset
 void AActor_Spawner::Spawn()
 {
-	UClass* BlueprintActor = LoadClass<ACube>(nullptr, TEXT("/Game/Blueprints/MyBlueprintActor"));
+	UClass* BlueprintActor = LoadClass<ACube>(nullptr, TEXT("/Game/ThirdPerson/Blueprints/MyCube.uasset"));
+	if (!BlueprintActor)
+	{
+		if (GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Purple, TEXT("Failed to load blueprint"));
+		}
+	}
 	UWorld* world = GetWorld();
 	FTransform SpawnTransform = GetActorTransform();
 	FActorSpawnParameters SpawnParam;

@@ -100,23 +100,25 @@ void ACube_CollectingCharacter::DestroyActors()
 	}
 }
 
-void ACube_CollectingCharacter::Test()
-{
-	//Find the Actor Spawner in the world, and invoke it's Spawn Actor function
-	//get the a cube spawner class
-	AActor* ActorSpawnerTofind = UGameplayStatics::GetActorOfClass(GetWorld(), AActor_Spawner::StaticClass());
-
-	//convert it to type acubespawner? which is a more usable format
-	AActor_Spawner* ActorSpawnerReference = Cast<AActor_Spawner>(ActorSpawnerTofind);
-
-	if (GEngine)
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Test got called"));
-}
-
 void ACube_CollectingCharacter::SpawnCube()
 {
 	UWorld* world = GetWorld();
-	AActor* ActorSpawnerTofind = UGameplayStatics::GetActorOfClass(world, ACubeSpawner::StaticClass());
+	AActor* ActorSpawnerTofind = UGameplayStatics::GetActorOfClass(world, AActor_Spawner::StaticClass());
+	AActor_Spawner* ActorSpawnerReference = Cast<AActor_Spawner>(ActorSpawnerTofind);
+	if (ActorSpawnerReference)
+	{
+		ActorSpawnerReference->Spawn();
+		if (GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("SpawnCube called!"));
+		}
+	}
+	else {
+		if (GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Purple, TEXT("Error"));
+		}
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -137,10 +139,9 @@ void ACube_CollectingCharacter::SetupPlayerInputComponent(class UInputComponent*
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ACube_CollectingCharacter::Look);
 
-		PlayerInputComponent->BindAction("CreateCube", IE_Pressed, this, &ACube_CollectingCharacter::SpawnActors);
-		PlayerInputComponent->BindAction("DestroyCube", IE_Pressed, this, &ACube_CollectingCharacter::DestroyActors);
-		PlayerInputComponent->BindAction("SpawnActor", IE_Pressed, this, &ACube_CollectingCharacter::Test);
-		//PlayerInputComponent->BindAction("DestroyActor", IE_Pressed, this, &ACube_CollectingCharacter::DestroyActors);
+		PlayerInputComponent->BindAction("Spawn_Actors", IE_Pressed, this, &ACube_CollectingCharacter::SpawnActors);
+		PlayerInputComponent->BindAction("Destroy_Actors", IE_Pressed, this, &ACube_CollectingCharacter::DestroyActors);
+		PlayerInputComponent->BindAction("Spawn_Cube", IE_Pressed, this, &ACube_CollectingCharacter::SpawnCube);
 
 	}
 
