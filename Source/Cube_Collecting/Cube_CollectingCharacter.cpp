@@ -13,7 +13,7 @@
 #include "Cube.h"
 #include "CubeSpawner.h"
 #include "MySphere.h"
-
+#include "Actor_Spawner.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ACube_CollectingCharacter
@@ -100,6 +100,27 @@ void ACube_CollectingCharacter::DestroyActors()
 	}
 }
 
+void ACube_CollectingCharacter::SpawnCube()
+{
+	UWorld* world = GetWorld();
+	AActor* ActorSpawnerTofind = UGameplayStatics::GetActorOfClass(world, AActor_Spawner::StaticClass());
+	AActor_Spawner* ActorSpawnerReference = Cast<AActor_Spawner>(ActorSpawnerTofind);
+	if (ActorSpawnerReference)
+	{
+		ActorSpawnerReference->Spawn();
+		if (GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("SpawnCube called!"));
+		}
+	}
+	else {
+		if (GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Purple, TEXT("Error"));
+		}
+	}
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Input
 
@@ -118,8 +139,9 @@ void ACube_CollectingCharacter::SetupPlayerInputComponent(class UInputComponent*
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ACube_CollectingCharacter::Look);
 
-		PlayerInputComponent->BindAction("CreateCube", IE_Pressed, this, &ACube_CollectingCharacter::SpawnActors);
-		PlayerInputComponent->BindAction("DestroyCube", IE_Pressed, this, &ACube_CollectingCharacter::DestroyActors);
+		PlayerInputComponent->BindAction("Spawn_Actors", IE_Pressed, this, &ACube_CollectingCharacter::SpawnActors);
+		PlayerInputComponent->BindAction("Destroy_Actors", IE_Pressed, this, &ACube_CollectingCharacter::DestroyActors);
+		PlayerInputComponent->BindAction("Spawn_Cube", IE_Pressed, this, &ACube_CollectingCharacter::SpawnCube);
 
 	}
 
