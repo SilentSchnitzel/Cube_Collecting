@@ -37,12 +37,12 @@ void AActor_Spawner::Tick(float DeltaTime)
 //C: / Users / wtooy / Desktop / UnrealEngine / Cube_Collecting / Content / ThirdPerson / Blueprints / MyCube.uasset
 void AActor_Spawner::Spawn()
 {
-	UClass* BlueprintActor = LoadClass<ACube>(nullptr, TEXT("/Game/ThirdPerson/Blueprints/MyCube.uasset"));
+	UClass* BlueprintActor = LoadClass<ACube>(nullptr, TEXT("/Game/ThirdPerson/Blueprints/MyCube.MyCube_C"));
 	if (!BlueprintActor)
 	{
 		if (GEngine)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Purple, TEXT("Failed to load blueprint"));
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Purple, TEXT("FAILED TO LOAD BLUEPRINT"));
 		}
 	}
 	UWorld* world = GetWorld();
@@ -54,6 +54,3 @@ void AActor_Spawner::Spawn()
 		world->SpawnActor(BlueprintActor, &SpawnTransform, SpawnParam);
 	}
 }
-
-
-
