@@ -29,7 +29,4 @@ protected:
 public: 
 	UFUNCTION()
 		void Spawn();
-
-	UPROPERTY(EditDefaultsOnly)
-		TSubclassOf<AActor> ActorToSpawn;
 };

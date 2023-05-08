@@ -75,5 +75,6 @@ protected:
 	void DestroyActors();
 
 	void SpawnCube();
+	void DestroyCubes();
 };
 

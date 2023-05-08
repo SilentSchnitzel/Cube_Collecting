@@ -121,6 +121,20 @@ void ACube_CollectingCharacter::SpawnCube()
 	}
 }
 
+void ACube_CollectingCharacter::DestroyCubes()
+{
+	TArray<AActor*> FoundActors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ACube::StaticClass(), FoundActors);
+	for (AActor* ActorFound : FoundActors)
+	{
+		ActorFound->Destroy();
+		if (GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Purple, TEXT("DestoryCubes called!"));
+		}
+	}
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Input
 
@@ -142,6 +156,7 @@ void ACube_CollectingCharacter::SetupPlayerInputComponent(class UInputComponent*
 		PlayerInputComponent->BindAction("Spawn_Actors", IE_Pressed, this, &ACube_CollectingCharacter::SpawnActors);
 		PlayerInputComponent->BindAction("Destroy_Actors", IE_Pressed, this, &ACube_CollectingCharacter::DestroyActors);
 		PlayerInputComponent->BindAction("Spawn_Cube", IE_Pressed, this, &ACube_CollectingCharacter::SpawnCube);
+		PlayerInputComponent->BindAction("Destroy_Cubes", IE_Pressed, this, &ACube_CollectingCharacter::DestroyCubes);
 
 	}
 

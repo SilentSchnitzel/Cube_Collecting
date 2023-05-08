@@ -13,7 +13,5 @@ class ACube_CollectingGameMode : public AGameModeBase
 
 public:
 	ACube_CollectingGameMode();
+	virtual void Tick(float DeltaTime) override;
 };
-
-
-

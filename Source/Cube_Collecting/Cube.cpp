@@ -29,20 +29,8 @@ void ACube::animation()
 {
 	static int counter = 0;
 	counter++;
-	// Get the current rotation of the actor
-	//FRotator CurrentRotation = GetActorRotation();
 
 	FRotator NewRotation = FRotator(0.0f, (float)counter, 0.0f);
-	//FRotator NewRotation = FRotator(0.0f, 45.0f, 0.0f); // for example, a 45 degree Yaw rotation
-	if (GEngine)
-	{
-		if (counter == 2)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Purple, TEXT("counter equals 2"));
-		}
-		if (counter == 3)
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Purple, TEXT("counter equals 3"));
-	}
 	
 	SetActorRotation(NewRotation);
 }
