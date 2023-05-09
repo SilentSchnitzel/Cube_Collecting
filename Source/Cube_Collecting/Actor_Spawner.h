@@ -29,4 +29,6 @@ protected:
 public: 
 	UFUNCTION()
 		void Spawn();
+	UFUNCTION()
+		void Teleport();
 };

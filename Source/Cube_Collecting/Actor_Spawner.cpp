@@ -54,3 +54,7 @@ void AActor_Spawner::Spawn()
 		world->SpawnActor(BlueprintActor, &SpawnTransform, SpawnParam);
 	}
 }
+
+void AActor_Spawner::Teleport()
+{
+}
