@@ -25,4 +25,9 @@ public:
 	UFUNCTION()
 		void animation();
 
+	UFUNCTION()
+		void detect_collisions();
+
+	UFUNCTION()
+		void collision_handler();
 };

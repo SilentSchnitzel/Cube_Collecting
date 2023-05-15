@@ -2,6 +2,9 @@
 
 
 #include "Cube.h"
+#include "Engine/Blueprint.h"
+#include "Components/BoxComponent.h"
+#include "GameFramework/Actor.h"
 
 // Sets default values
 ACube::ACube()
@@ -22,6 +25,7 @@ void ACube::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	ACube::animation();
+	ACube::detect_collisions();
 
 }
 
@@ -34,4 +38,31 @@ void ACube::animation()
 	
 	SetActorRotation(NewRotation);
 }
+
+//Game/ThirdPerson/Blueprints/MyCube.MyCube
+void ACube::detect_collisions()
+{
+	/*UBlueprint* Blueprint = LoadObject<UBlueprint>(nullptr, TEXT("Blueprint'Game/ThirdPerson/Blueprints/MyCube.MyCube'"));
+	if (!Blueprint)
+	{
+		if (GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Error"));
+		}
+		return;
+	}*/
+	
+	UBoxComponent* CollisionBox;
+	CollisionBox = Cast<UBoxComponent>(FindComponentByClass<UBoxComponent>());
+	if (!CollisionBox)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("of course this would not work"));
+		return;
+	}
+}
+void ACube::collision_handler()
+{
+
+}
+
 
