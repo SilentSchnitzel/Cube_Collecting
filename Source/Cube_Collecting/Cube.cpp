@@ -2,15 +2,26 @@
 
 
 #include "Cube.h"
-#include "Engine/Blueprint.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/Actor.h"
+#include "Cube_CollectingCharacter.h"
+#include "Engine/Engine.h"
 
 // Sets default values
 ACube::ACube()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+
+	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("DefaultSceneRoot"));
+
+	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxComponent"));
+	CollisionBox->SetCollisionProfileName("Trigger");
+
+	CollisionBox->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+
+	//CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ACube::OnOverlapBegin);
 }
 
 // Called when the game starts or when spawned
@@ -25,7 +36,6 @@ void ACube::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	ACube::animation();
-	ACube::detect_collisions();
 
 }
 
@@ -39,30 +49,19 @@ void ACube::animation()
 	SetActorRotation(NewRotation);
 }
 
-//Game/ThirdPerson/Blueprints/MyCube.MyCube
-void ACube::detect_collisions()
+
+void ACube::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	/*UBlueprint* Blueprint = LoadObject<UBlueprint>(nullptr, TEXT("Blueprint'Game/ThirdPerson/Blueprints/MyCube.MyCube'"));
-	if (!Blueprint)
+	if (OtherActor->IsA(ACube_CollectingCharacter::StaticClass()))
 	{
 		if (GEngine)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Error"));
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("I am bad"));
 		}
-		return;
-	}*/
-	
-	UBoxComponent* CollisionBox;
-	CollisionBox = Cast<UBoxComponent>(FindComponentByClass<UBoxComponent>());
-	if (!CollisionBox)
+	}
+	if (GEngine)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("of course this would not work"));
-		return;
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Purple, TEXT("dear god make the pain stop"));
 	}
 }
-void ACube::collision_handler()
-{
-
-}
-
 
