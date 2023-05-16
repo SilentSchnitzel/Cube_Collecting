@@ -21,7 +21,7 @@ ACube::ACube()
 
 	CollisionBox->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 
-	//CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ACube::OnOverlapBegin);
+	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ACube::OnOverlapBegin);
 }
 
 // Called when the game starts or when spawned
@@ -56,12 +56,8 @@ void ACube::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 	{
 		if (GEngine)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("I am bad"));
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("character touched cube"));
 		}
-	}
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Purple, TEXT("dear god make the pain stop"));
 	}
 }
 
