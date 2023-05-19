@@ -6,7 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "Cube_CollectingCharacter.h"
 #include "Engine/Engine.h"
-
+#include "Actor_Spawner.h"
+#include "Kismet/GameplayStatics.h"
 // Sets default values
 ACube::ACube()
 {
@@ -22,6 +23,11 @@ ACube::ACube()
 	CollisionBox->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 
 	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ACube::OnOverlapBegin);
+
+	AActor_Spawner* spawner;
+	// OtherActorInstance = Cast<AOtherActorClass>(UGameplayStatics::GetActorOfClass(GetWorld(), AOtherActorClass::StaticClass()));
+	spawner = Cast<AActor_Spawner>(UGameplayStatics::GetActorOfClass(GetWorld(), AActor_Spawner::StaticClass()));
+
 }
 
 // Called when the game starts or when spawned
@@ -57,6 +63,8 @@ void ACube::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 		if (GEngine)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("character touched cube"));
+			this->Destroy();
+
 		}
 	}
 }
