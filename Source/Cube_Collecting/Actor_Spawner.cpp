@@ -6,6 +6,7 @@
 #include "Cube.h"
 #include "MySphere.h"
 #include "GameFramework/Actor.h"
+#include "Math/RandomStream.h"
 
 
 // Sets default values
@@ -57,4 +58,11 @@ void AActor_Spawner::Spawn()
 
 void AActor_Spawner::Teleport()
 {
+	FRandomStream rs;
+	rs.GenerateNewSeed();
+	float RandomNum1 = rs.FRandRange(0, 1000);
+	rs.GenerateNewSeed();
+	float RandomNum2 = rs.FRandRange(0, 1000);
+	FVector NewLocation(RandomNum1, RandomNum2, 300.0f);
+	this->SetActorLocation(NewLocation);
 }
