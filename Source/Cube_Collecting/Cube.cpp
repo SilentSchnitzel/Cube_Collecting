@@ -30,7 +30,7 @@ ACube::ACube()
 	//{
 		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Error"));
 	//}
-	spawner->Teleport();
+	//spawner->Teleport();
 
 }
 
