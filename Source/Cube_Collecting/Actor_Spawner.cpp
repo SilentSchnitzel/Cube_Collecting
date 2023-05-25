@@ -58,11 +58,8 @@ void AActor_Spawner::Spawn()
 
 void AActor_Spawner::Teleport()
 {
-	FRandomStream rs;
-	rs.GenerateNewSeed();
-	float RandomNum1 = rs.FRandRange(0, 1000);
-	rs.GenerateNewSeed();
-	float RandomNum2 = rs.FRandRange(0, 1000);
-	FVector NewLocation(RandomNum1, RandomNum2, 300.0f);
-	this->SetActorLocation(NewLocation);
+	float x = FMath::RandRange(280.0f, 2780.0f);
+	float y = FMath::RandRange(280.0f, 3260.0f);
+	FVector NewLocation(x, y, 300.0f);
+	SetActorLocation(NewLocation, false, 0, ETeleportType::None);
 }

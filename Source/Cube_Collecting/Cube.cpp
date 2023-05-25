@@ -68,7 +68,6 @@ void ACube::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("character touched cube"));
 			this->Destroy();
-
 		}
 	}
 }
