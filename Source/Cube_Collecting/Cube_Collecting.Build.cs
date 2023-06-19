@@ -9,8 +9,5 @@ public class Cube_Collecting : ModuleRules
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "EnhancedInput" });
-
-		//add slate to the project
-		PublicDependecyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
 	}
 }
