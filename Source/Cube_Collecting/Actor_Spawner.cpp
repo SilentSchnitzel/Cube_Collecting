@@ -60,6 +60,7 @@ void AActor_Spawner::Teleport()
 {
 	float x = FMath::RandRange(280.0f, 2780.0f);
 	float y = FMath::RandRange(280.0f, 3260.0f);
-	FVector NewLocation(x, y, 300.0f);
-	SetActorLocation(NewLocation, false, 0, ETeleportType::None);
+	FVector NewLocation = FVector(x, y, 300.0f);
+	this->SetActorLocation(NewLocation, false, 0, ETeleportType::None);
+	//SetActorLocation(NewLocation, false, 0, ETeleportType::None);
 }
