@@ -34,7 +34,6 @@ void AActor_Spawner::BeginPlay()
 void AActor_Spawner::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	DetectCube();
 
 }
 //C: / Users / wtooy / Desktop / UnrealEngine / Cube_Collecting / Content / ThirdPerson / Blueprints / MyCube.uasset
@@ -64,28 +63,4 @@ void AActor_Spawner::Teleport()
 	float y = FMath::RandRange(280.0f, 3260.0f);
 	NewLocation = FVector(x, y, 300.0f);
 	SetActorLocation(NewLocation, false, 0, ETeleportType::None);
-}
-
-void AActor_Spawner::DetectCube()
-{
-	//find all actors on the map
-	TArray<AActor*> FoundActors;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ACube::StaticClass(), FoundActors);
-	int32 n = 1;
-	if (bTeleport == true)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Purple, TEXT("bTeleport is true"));
-	}
-	if (bTeleport == false)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Purple, TEXT("bTeleport is false"));
-	}
-	if (FoundActors.Num() == n)
-	{
-		if (GEngine)
-		{
-			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("Made it in the if statement"));
-		}
-		Teleport();
-	}
 }

@@ -33,9 +33,5 @@ public:
 		void Teleport();
 	UPROPERTY(EditAnywhere, Category = "Location")
 		FVector NewLocation;
-	UFUNCTION()
-		void DetectCube();
-	UPROPERTY(EditAnywhere)
-		bool bTeleport;
 
 };
