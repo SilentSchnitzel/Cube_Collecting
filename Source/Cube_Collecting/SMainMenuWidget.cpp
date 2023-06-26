@@ -2,6 +2,8 @@
 
 
 #include "SMainMenuWidget.h"
+#include "MenuHUD.h"
+#include "GameFramework/PlayerController.h"
 
 #define LOCTEXT_NAMESPACE "MainMenu"
 
@@ -47,8 +49,59 @@ void SMainMenuWidget::Construct(const FArguments& InArgs)
 					.Text(TitleText)
 					.Justification(ETextJustify::Center)
 				]
+				//Play button
+				+ SVerticalBox::Slot()
+				.Padding(ButtonPadding)
+				[
+					SNew(SButton)
+					.OnClicked(this, &SMainMenuWidget::OnPlayClicked)
+					[
+						SNew(STextBlock)
+						.Font(ButtonTextStyle)
+						.Text(PlayText)
+						.Justification(ETextJustify::Center)
+					]
+				]
+				//Exit button
+				+ SVerticalBox::Slot()
+				.Padding(ButtonPadding)
+				[
+					SNew(SButton)
+					.OnClicked(this, &SMainMenuWidget::OnQuitClicked)
+					[
+						SNew(STextBlock)
+						.Font(ButtonTextStyle)
+						.Text(QuitText)
+						.Justification(ETextJustify::Center)
+					]
+				]
 			]
+			
 		];
+}
+
+FReply SMainMenuWidget::OnPlayClicked() const
+{
+
+	if (OwningHUD.IsValid())
+	{
+		OwningHUD->RemoveMenu();
+	}
+	return FReply::Handled();
+}
+
+FReply SMainMenuWidget::OnQuitClicked() const
+{
+	if (OwningHUD.IsValid())
+	{
+		if (APlayerController* PC = OwningHUD->PlayerOwner)
+		{
+			//runs a command in the console that will quit the game
+			PC->ConsoleCommand("quit");
+		}
+	}
+
+	return FReply::Handled();
 }
 
 #undef LOCTEXT_NAMESPACE
