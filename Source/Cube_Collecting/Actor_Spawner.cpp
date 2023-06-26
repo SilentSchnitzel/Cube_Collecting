@@ -7,6 +7,7 @@
 #include "MySphere.h"
 #include "GameFramework/Actor.h"
 #include "Math/RandomStream.h"
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values
@@ -60,6 +61,6 @@ void AActor_Spawner::Teleport()
 {
 	float x = FMath::RandRange(280.0f, 2780.0f);
 	float y = FMath::RandRange(280.0f, 3260.0f);
-	FVector NewLocation(x, y, 300.0f);
+	NewLocation = FVector(x, y, 300.0f);
 	SetActorLocation(NewLocation, false, 0, ETeleportType::None);
 }

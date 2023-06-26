@@ -2,4 +2,27 @@
 
 
 #include "MenuPlayerController.h"
+#include "MenuHUD.h"
 
+AMenuPlayerController::AMenuPlayerController()
+{
+}
+
+void AMenuPlayerController::SetupInputComponent()
+{
+	Super::SetupInputComponent();
+
+	if (InputComponent)
+	{
+		//bind the open menuy action to the open menu function
+		InputComponent->BindAction("OpenMenu", IE_Pressed, this, &AMenuPlayerController::OpenMenu);
+	}
+}
+
+void AMenuPlayerController::OpenMenu()
+{
+	if (AMenuHUD* MenuHUD = Cast<AMenuHUD>(GetHUD()))
+	{
+		MenuHUD->ShowMenu();
+	}
+}

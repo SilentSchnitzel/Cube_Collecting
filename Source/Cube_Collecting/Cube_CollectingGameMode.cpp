@@ -6,6 +6,8 @@
 #include "Cube.h"
 #include <Kismet/GameplayStatics.h>
 #include "Actor_Spawner.h"
+#include "MenuPlayerController.h"
+#include "MenuHUD.h"
 
 ACube_CollectingGameMode::ACube_CollectingGameMode()
 {
@@ -17,6 +19,9 @@ ACube_CollectingGameMode::ACube_CollectingGameMode()
 	}
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	PlayerControllerClass = AMenuPlayerController::StaticClass();
+	HUDClass = AMenuHUD::StaticClass();
 }
 
 void ACube_CollectingGameMode::Tick(float DeltaTime)
@@ -62,10 +67,3 @@ bool ACube_CollectingGameMode::check_cube()
 	}
 	return true;
 }
-
-//things that this game mode has to do:
-//1. track when to spawn cubes */
-//2. track when to teleport spawner
-//3. track how much time the player has to find the cube*
-//* = unsure of whether that is going to be a feature
-//*/ = checkmark

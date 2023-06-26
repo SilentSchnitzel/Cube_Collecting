@@ -24,13 +24,9 @@ ACube::ACube()
 
 	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ACube::OnOverlapBegin);
 
-	AActor_Spawner* spawner;
-	spawner = Cast<AActor_Spawner>(UGameplayStatics::GetActorOfClass(GetWorld(), AActor_Spawner::StaticClass()));
-	//if (!spawner)
-	//{
-		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Error"));
-	//}
-	spawner->Teleport();
+	//AActor_Spawner* spawner;
+	//spawner = Cast<AActor_Spawner>(UGameplayStatics::GetActorOfClass(GetWorld(), AActor_Spawner::StaticClass()));
+	//spawner->Teleport();
 
 }
 
@@ -67,6 +63,15 @@ void ACube::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 		if (GEngine)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("character touched cube"));
+
+			AActor* ActorSpawnerTofind = UGameplayStatics::GetActorOfClass(GetWorld(), AActor_Spawner::StaticClass());
+
+			AActor_Spawner* ActorSpawnerReference = Cast<AActor_Spawner>(ActorSpawnerTofind);
+			if (ActorSpawnerReference)
+			{
+				ActorSpawnerReference->Teleport();
+			}
+
 			this->Destroy();
 		}
 	}

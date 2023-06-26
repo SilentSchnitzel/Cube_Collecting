@@ -31,4 +31,7 @@ public:
 		void Spawn();
 	UFUNCTION()
 		void Teleport();
+	UPROPERTY(EditAnywhere, Category = "Location")
+		FVector NewLocation;
+
 };
