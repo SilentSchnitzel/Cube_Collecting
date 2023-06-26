@@ -13,5 +13,13 @@ UCLASS()
 class CUBE_COLLECTING_API AMenuHUD : public AHUD
 {
 	GENERATED_BODY()
+
+protected:
+	//store a reference to the menu itself
+	TSharedPtr<class SMainMenuWidget> MenuWidget;
+	//container will be used to remove and add the menu to the screen
+	TSharedPtr<class SWidget> MenuWidgetContainer;
+
+	virtual void BeginPlay() override;
 	
 };

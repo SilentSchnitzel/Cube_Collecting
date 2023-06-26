@@ -25,5 +25,6 @@ public:
 	//does not count as a reference because it is a weak pointer
 	TWeakObjectPtr<AMenuHUD> OwningHUD;
 
+	//Mandatory.
 	virtual bool SupportsKeyboardFocus() const override { return true; };
 };
