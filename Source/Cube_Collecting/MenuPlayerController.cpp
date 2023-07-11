@@ -4,8 +4,10 @@
 #include "MenuPlayerController.h"
 #include "MenuHUD.h"
 
+
 AMenuPlayerController::AMenuPlayerController()
 {
+
 }
 
 void AMenuPlayerController::SetupInputComponent()

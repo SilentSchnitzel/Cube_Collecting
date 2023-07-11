@@ -62,7 +62,6 @@ void ACube::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 	{
 		if (GEngine)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("character touched cube"));
 
 			AActor* ActorSpawnerTofind = UGameplayStatics::GetActorOfClass(GetWorld(), AActor_Spawner::StaticClass());
 

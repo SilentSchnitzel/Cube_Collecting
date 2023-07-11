@@ -40,14 +40,6 @@ class ACube_CollectingCharacter : public ACharacter
 public:
 	ACube_CollectingCharacter();
 	
-	//UPROPERTY(EditAnywhere)
-	//	TSubclassOf is a template class that provides UClass type safety. 
-	//	For instance, let's imagine that you are creating a projectile class that allows the designer to specify the damage type. 
-	//	You could just create a UPROPERTY of type UClass and hope the designer always assigns a class derived from UDamageType 
-	//	or you could use the TSubclassOf template to enforce the choice
-	//	TSubclassOf<class ACube> ToSpawn;
-	//
-	
 protected:
 
 	/** Called for movement input */
@@ -76,5 +68,15 @@ protected:
 
 	void SpawnCube();
 	void DestroyCubes();
+public:
+	//clean things up once the game ends
+	virtual void EndPlay(const EEndPlayReason::Type EndPlay) override;
+	//HUD
+	//widget class to spawn for heads up display
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<class UGameHUD> GameHUDClass;
+	//widget instance to be used as HUD
+	UPROPERTY()
+		class UGameHUD* GameHUD;
 };
 

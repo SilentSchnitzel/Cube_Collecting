@@ -14,6 +14,9 @@
 #include "CubeSpawner.h"
 #include "MySphere.h"
 #include "Actor_Spawner.h"
+#include "GameHUD.h"
+#include "Blueprint/UserWidget.h"
+#include "MenuPlayerController.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ACube_CollectingCharacter
@@ -53,6 +56,8 @@ ACube_CollectingCharacter::ACube_CollectingCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
+	GameHUD = nullptr;
+	GameHUDClass = nullptr;
 }
 
 void ACube_CollectingCharacter::BeginPlay()
@@ -67,6 +72,15 @@ void ACube_CollectingCharacter::BeginPlay()
 		{
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
+	}
+	//only create widget if the character is locally controlled(only when an actually user and screen is present)
+	if (IsLocallyControlled() && GameHUDClass)
+	{
+		//set the owner of the widget to the player controller
+		AMenuPlayerController* MPC = GetController<AMenuPlayerController>();
+		check(MPC);
+		GameHUD = CreateWidget<UGameHUD>(MPC, GameHUDClass);
+		GameHUD->AddToPlayerScreen();
 	}
 }
 
@@ -133,6 +147,19 @@ void ACube_CollectingCharacter::DestroyCubes()
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Purple, TEXT("DestoryCubes called!"));
 		}
 	}
+}
+
+void ACube_CollectingCharacter::EndPlay(const EEndPlayReason::Type EndPlay)
+{
+	if (GameHUD)
+	{
+		//remove the widget from the player's viewport
+		GameHUD->RemoveFromParent();
+		//let garbage collection delete the instance of the widget
+		GameHUD = nullptr;
+	}
+
+	Super::EndPlay(EndPlay);
 }
 
 //////////////////////////////////////////////////////////////////////////
