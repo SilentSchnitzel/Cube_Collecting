@@ -17,7 +17,7 @@
 #include "GameHUD.h"
 #include "Blueprint/UserWidget.h"
 #include "MenuPlayerController.h"
-
+#include "Engine/Engine.h"
 //////////////////////////////////////////////////////////////////////////
 // ACube_CollectingCharacter
 
@@ -58,6 +58,16 @@ ACube_CollectingCharacter::ACube_CollectingCharacter()
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 	GameHUD = nullptr;
 	GameHUDClass = nullptr;
+
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ACube_CollectingCharacter::OnOverlapBegin);
+
+	MaxHealth = 25.0f;
+	Health = MaxHealth;
+
+	HealthDelta = 5.0f;
+	HealthDecayDelta = -0.7f;
+
+	PrimaryActorTick.bCanEverTick = true;
 }
 
 void ACube_CollectingCharacter::BeginPlay()
@@ -81,6 +91,7 @@ void ACube_CollectingCharacter::BeginPlay()
 		check(MPC);
 		GameHUD = CreateWidget<UGameHUD>(MPC, GameHUDClass);
 		GameHUD->AddToPlayerScreen();
+		GameHUD->SetHealth(Health, MaxHealth);
 	}
 }
 
@@ -160,6 +171,63 @@ void ACube_CollectingCharacter::EndPlay(const EEndPlayReason::Type EndPlay)
 	}
 
 	Super::EndPlay(EndPlay);
+}
+
+void ACube_CollectingCharacter::Tick(float DeltaTime)
+{
+	ACube_CollectingCharacter::LeakHealth();
+}
+
+void ACube_CollectingCharacter::LeakHealth()
+{
+	float TimeSinceStart = GetWorld()->GetTimeSeconds();
+	if (TimeSinceStart > 60 && TimeSinceStart < 120)
+	{
+		HealthDecayDelta = -0.8f;
+	}
+	if (TimeSinceStart > 120 && TimeSinceStart < 180)
+	{
+		HealthDecayDelta = -1.0f;
+	}
+	if (TimeSinceStart > 180 && TimeSinceStart < 240)
+	{
+		HealthDecayDelta = -1.25;
+	}
+	if (TimeSinceStart > 240 && TimeSinceStart < 300)
+	{
+		HealthDecayDelta = -1.5;
+	}
+	if (TimeSinceStart > 300 && TimeSinceStart < 360)
+	{
+		HealthDecayDelta = -2.0f;
+	}
+	Health = FMath::Clamp(Health + (HealthDecayDelta * GetWorld()->GetDeltaSeconds()), 0.0f, MaxHealth);
+	GameHUD->SetHealth(Health, MaxHealth);
+	if (Health == 0.0f)
+	{
+		
+	}
+}
+
+void ACube_CollectingCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor->IsA(ACube::StaticClass()))
+	{
+		float HealthPercent = GameHUD->CheckHealth();
+		if (HealthPercent == -1.0f)
+		{
+			if (GEngine)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("An error has occured"));
+			}
+		}
+		if (!(HealthPercent == 1.0f))
+		{
+			Health = FMath::Clamp(Health + HealthDelta, 0.0f, MaxHealth);
+			GameHUD->SetHealth(Health, MaxHealth);
+		}
+
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

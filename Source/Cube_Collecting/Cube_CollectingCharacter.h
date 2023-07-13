@@ -71,6 +71,8 @@ protected:
 public:
 	//clean things up once the game ends
 	virtual void EndPlay(const EEndPlayReason::Type EndPlay) override;
+
+	virtual void Tick(float DeltaTime) override;
 	//HUD
 	//widget class to spawn for heads up display
 	UPROPERTY(EditAnywhere)
@@ -78,5 +80,22 @@ public:
 	//widget instance to be used as HUD
 	UPROPERTY()
 		class UGameHUD* GameHUD;
+
+	void LeakHealth();
+
+
+	UFUNCTION()
+		void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+			UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
+			const FHitResult& SweepResult);
+	UPROPERTY(EditAnywhere)
+		float MaxHealth;
+	UPROPERTY(EditAnywhere)
+		float Health;
+
+	UPROPERTY(EditAnywhere)
+		float HealthDecayDelta;
+	UPROPERTY(EditAnywhere)
+		float HealthDelta;
 };
 

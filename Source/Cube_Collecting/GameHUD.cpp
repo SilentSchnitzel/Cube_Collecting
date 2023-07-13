@@ -10,5 +10,18 @@ void UGameHUD::SetHealth(float CurrentHealth, float MaxHealth)
 	{
 		//set the percent of the progress bar
 		HealthBar->SetPercent(CurrentHealth / MaxHealth);
+
 	}
 }
+
+float UGameHUD::CheckHealth()
+{
+	if (HealthBar)
+	{
+		float HealthPercent = HealthBar->GetPercent();
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Orange, FString::Printf(TEXT("%f"), HealthPercent));
+		return HealthPercent;
+	}
+	return -1.0f;
+}
+

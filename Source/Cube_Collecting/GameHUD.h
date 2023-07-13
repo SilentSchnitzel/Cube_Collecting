@@ -22,5 +22,6 @@ public:
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 		class UProgressBar* HealthBar;
 	
+	float CheckHealth();
 	
 };
